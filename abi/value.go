@@ -572,11 +572,12 @@ func (b FixedBytesValue) MapTo(_ Mapper, dst any) error {
 		}
 		dstRef.SetInt(i64)
 	case reflect.Interface:
-		v := reflect.New(reflect.ArrayOf(len(b), reflect.TypeOf(byte(0))))
-		for i := 0; i < len(b); i++ {
-			v.Elem().Index(i).SetUint(uint64(b[i]))
-		}
-		dstRef.Set(v.Elem())
+		panic("reflect.Interface ArrayOf not supported in tinygo: abi: cannot map bytes to interface{}")
+		// v := reflect.New(reflect.ArrayOf(len(b), reflect.TypeOf(byte(0))))
+		// for i := 0; i < len(b); i++ {
+		// v.Elem().Index(i).SetUint(uint64(b[i]))
+		// }
+		// dstRef.Set(v.Elem())
 	default:
 		switch dstRef.Interface().(type) {
 		case big.Int:
